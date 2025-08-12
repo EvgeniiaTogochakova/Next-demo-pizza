@@ -33,7 +33,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 1,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -41,7 +41,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 2,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -49,7 +49,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 3,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -57,7 +57,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 4,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -65,7 +65,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 5,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -73,7 +73,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 6,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -83,8 +83,8 @@ export default function Home() {
                 ]}
               />
               <ProductsGroupList
-                title="Завтрак"
-                categoryId={1}
+                title="Комбо"
+                categoryId={2}
                 items={[
                   {
                     id: 0,
@@ -95,7 +95,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 1,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -103,7 +103,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 2,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -111,7 +111,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 3,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -119,7 +119,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 4,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -127,7 +127,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 5,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
@@ -135,7 +135,7 @@ export default function Home() {
                       'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
                   },
                   {
-                    id: 0,
+                    id: 6,
                     name: 'Чизбургер-пицца',
                     price: 550,
                     items: [{ price: 550 }],
