@@ -11,6 +11,7 @@ CREATE TABLE "public"."User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "role" "public"."UserRole" NOT NULL DEFAULT 'USER',
+    "verified" TIMESTAMP(3),
     "provider" TEXT,
     "providerId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
