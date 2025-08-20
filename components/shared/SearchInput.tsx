@@ -23,33 +23,33 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
     setFocused(false);
   });
 
-  //   useDebounce(
-  //     async () => {
-  //       try {
-  //         const response = await Api.products.search(searchQuery);
-  //         setProducts(response);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     },
-  //     250,
-  //     [searchQuery],
-  //   );
-
   useDebounce(
-    () => {
-      Api.products.search(searchQuery).then((items) => {
-        setProducts(items);
-      });
+    async () => {
+      try {
+        const response = await Api.products.search(searchQuery);
+        setProducts(response);
+      } catch (error) {
+        console.log(error);
+      }
     },
     250,
     [searchQuery],
   );
-    const onClickItem = () => {
-      setFocused(false);
-      setSearchQuery('');
-      setProducts([]);
-    };
+
+  // useDebounce(
+  //   () => {
+  //     Api.products.search(searchQuery).then((items) => {
+  //       setProducts(items);
+  //     });
+  //   },
+  //   250,
+  //   [searchQuery],
+  // );
+  const onClickItem = () => {
+    setFocused(false);
+    setSearchQuery('');
+    setProducts([]);
+  };
 
   return (
     <>
