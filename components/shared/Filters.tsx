@@ -7,6 +7,7 @@ import { Input } from '../ui';
 import { RangeSlider } from './RandgeSlider';
 import { CheckboxFiltersGroup } from './CheckboxFiltersGroup';
 import { useIngredients } from '@/hooks/use-ingredients';
+import { useSet } from 'react-use';
 
 interface Props {
   className?: string;
@@ -18,23 +19,54 @@ interface PriceProps {
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+const [pizzaTypes, {toggle:togglePizzaTypes}] = useSet(new Set<string>([]));
+const [sizes, {toggle:toggleSizes}] = useSet(new Set<string>([]));
+
   const [prices, setPrices] = React.useState<PriceProps>({ priceFrom: 0, priceTo: 1000 });
 
-  const { ingredients, loading, onAddId, selectedIds } = useIngredients();
+  const { ingredients, loading, onAddId, selectedIngredientsIds } = useIngredients();
   const items = ingredients.map((item) => ({ value: String(item.id), text: item.name }));
 
   const updatePrice = (name: keyof PriceProps, value: number) => {
     setPrices((prevPrices) => ({ ...prevPrices, [name]: value }));
   };
 
+  React.useEffect(() => {
+    console.log(prices, pizzaTypes, sizes, selectedIngredientsIds);
+  }, [prices,pizzaTypes,sizes, selectedIngredientsIds]);
+  
   return (
     <div className={className}>
       <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
 
       {/* Верхние чекбоксы */}
       <div className="flex flex-col gap-4">
-        <FilterCheckbox text="Можно собирать" value="1" name="mojnoSobirat" />
-        <FilterCheckbox text="Новинки" value="2" name="novinki" />
+        <CheckboxFiltersGroup
+          title="Тип теста"
+          name="pizzaTypes"
+          className="mt-5"
+          items={[
+            { text: 'Тонкое', value: '1' },
+            { text: 'Традиционное', value: '2' },
+          ]}
+          // loading={loading}
+          onClickCheckbox={togglePizzaTypes}
+          selected={pizzaTypes}
+        />
+
+        <CheckboxFiltersGroup
+          title="Размеры"
+          name="sizes"
+          className="mt-5"
+          items={[
+            { text: '20 см', value: '20' },
+            { text: '30 см', value: '30' },
+            { text: '40 см', value: '40' },
+          ]}
+          // loading={loading}
+          onClickCheckbox={toggleSizes}
+          selected={sizes}
+        />
       </div>
 
       {/* Фильтр цен  */}
@@ -58,7 +90,13 @@ export const Filters: React.FC<Props> = ({ className }) => {
             onChange={(e) => updatePrice('priceTo', Number(e.target.value))}
           />
         </div>
-        <RangeSlider min={0} max={1000} step={10} value={[prices.priceFrom, prices.priceTo]} onValueChange={([priceFrom,priceTo])=>setPrices({priceFrom, priceTo})} />
+        <RangeSlider
+          min={0}
+          max={1000}
+          step={10}
+          value={[prices.priceFrom, prices.priceTo]}
+          onValueChange={([priceFrom, priceTo]) => setPrices({ priceFrom, priceTo })}
+        />
       </div>
 
       {/* Фильтр ингредиентов */}
@@ -70,7 +108,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
         items={items}
         loading={loading}
         onClickCheckbox={onAddId}
-        selectedIds={selectedIds}
+        selected={selectedIngredientsIds}
         name="ingredients"
       />
     </div>
