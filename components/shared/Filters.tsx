@@ -2,9 +2,7 @@
 
 import React from 'react';
 
-import { useFilters } from '@/hooks/use-filters';
-import { useIngredients } from '@/hooks/use-ingredients';
-import { useQueryFilters } from '@/hooks/use-query-filters';
+import { useFilters, useIngredients, useQueryFilters } from '@/hooks';
 
 import { Title } from './Title';
 import { CheckboxFiltersGroup } from './CheckboxFiltersGroup';

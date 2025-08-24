@@ -14,21 +14,21 @@ interface QueryFilters extends PriceProps {
   ingredients: string;
 }
 
-export interface Filters {
+interface Filters {
   sizes: Set<string>;
   pizzaTypes: Set<string>;
   selectedIngredients: Set<string>;
   prices: PriceProps;
 }
 
-interface ReturnProps extends Filters {
+export interface FiltersAllProps extends Filters {
   setPrices: (name: keyof PriceProps, value: number) => void;
   setPizzaTypes: (value: string) => void;
   setSizes: (value: string) => void;
   setSelectedIngredients: (value: string) => void;
 }
 
-export const useFilters = (): ReturnProps => {
+export const useFilters = (): FiltersAllProps => {
   const searchParams = useSearchParams() as unknown as Map<keyof QueryFilters, string>;
 
   const [selectedIngredients, { toggle: toggleIngredients }] = useSet(

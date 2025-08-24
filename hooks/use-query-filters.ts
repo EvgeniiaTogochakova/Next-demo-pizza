@@ -1,10 +1,9 @@
 import qs from 'qs';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { FiltersAllProps } from './use-filters';
 
-import { Filters } from './use-filters';
-
-export const useQueryFilters = (filters: Filters) => {
+export const useQueryFilters = (filters: FiltersAllProps) => {
   const isMounted = React.useRef(false);
   const router = useRouter();
 
