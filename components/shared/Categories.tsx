@@ -5,9 +5,11 @@ import { cn } from '@/lib/utils';
 import { useCategoryStore } from '@/store/category';
 import React from 'react';
 import { Skeleton } from '../ui';
+import { CategoryWithRelations } from '@/lib/prisma-types';
 
 interface Props {
   className?: string;
+  categories: CategoryWithRelations[];
 }
 
 // const categories = ['Пиццы', 'Комбо', 'Закуски', 'Коктейли', 'Кофе', 'Напитки', 'Десерты', 'Еще'];
@@ -25,23 +27,22 @@ interface Props {
 
 // const activeIndex = 0;
 
-export const Categories: React.FC<Props> = ({ className }) => {
-  const { categories, categoriesLoading } = useCategories();
-
-  console.log(categoriesLoading);
+export const Categories: React.FC<Props> = ({ className, categories }) => {
+  // export const Categories: React.FC<Props> = ({ className }) => {
+  // const { categories, categoriesLoading } = useCategories();
 
   const categoryActiveId = useCategoryStore((state) => state.activeId);
 
-  if (categoriesLoading) {
-    return (
-      <div className={cn('inline-flex gap-1 bg-gray-50 p-1 rounded-2xl', className)}>
-        {...Array(5)
-          .fill(0)
-          .map((_, index) => <Skeleton key={index} className="w-28 h-11 mb-4 rounded-2xl px-5" />)}
-        
-      </div>
-    );
-  }
+  // if (categoriesLoading) {
+  //   return (
+  //     <div className={cn('inline-flex gap-1 bg-gray-50 p-1 rounded-2xl', className)}>
+  //       {...Array(5)
+  //         .fill(0)
+  //         .map((_, index) => <Skeleton key={index} className="w-28 h-11 mb-4 rounded-2xl px-5" />)}
+
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={cn('inline-flex gap-1 bg-gray-50 p-1 rounded-2xl', className)}>
