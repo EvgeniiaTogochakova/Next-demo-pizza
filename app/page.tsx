@@ -1,7 +1,16 @@
-import { Container, Filters, ProductCard, ProductsGroupList, TopBar } from '@/components/shared';
+'use client';
+
+import { Container, Filters, ProductsGroupList, TopBar } from '@/components/shared';
 import { Title } from '@/components/shared/Title';
+import { useCategories } from '@/hooks';
 
 export default function Home() {
+  const { categories } = useCategories();
+
+  // const categories = await prisma.category.findMany({});
+  // console.log(categories);
+  // console.log(categories[0].products);
+
   return (
     <>
       <Container className="mt-10 border">
@@ -20,130 +29,22 @@ export default function Home() {
           <div className="flex-1">
             <div className="flex flex-col gap-16">
               {/* <ProductCard id={0} name='Чизбургер-пицца' price={550} imageUrl='https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg' /> */}
-              <ProductsGroupList
-                title="Пиццы"
-                categoryId={1}
-                items={[
-                  {
-                    id: 0,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 1,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 2,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 3,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 4,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 5,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 6,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                ]}
-              />
-              <ProductsGroupList
-                title="Комбо"
-                categoryId={2}
-                items={[
-                  {
-                    id: 0,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 1,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 2,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 3,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 4,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 5,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                  {
-                    id: 6,
-                    name: 'Чизбургер-пицца',
-                    price: 550,
-                    items: [{ price: 550 }],
-                    imageUrl:
-                      'https://images.spasibovsem.ru/catalog/original/pitstsa-dodo-pitstsa-chizburger-otzyvy-1557423991.jpg',
-                  },
-                ]}
-              />
+              {/* Список товаров */}
+              <div className="flex-1">
+                <div className="flex flex-col gap-16">
+                  {categories.map(
+                    (category) =>
+                      category.products?.length > 0 && (
+                        <ProductsGroupList
+                          key={category.id}
+                          title={category.name}
+                          categoryId={category.id}
+                          items={category.products}
+                        />
+                      ),
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

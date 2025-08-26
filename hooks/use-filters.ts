@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import { useSearchParams } from 'next/navigation';
@@ -40,9 +42,7 @@ export const useFilters = (): FiltersAllProps => {
   );
 
   const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
-    new Set<string>(
-      searchParams.get('pizzaTypes')?.split(',') || [],
-    ),
+    new Set<string>(searchParams.get('pizzaTypes')?.split(',') || []),
   );
 
   const [prices, setPrices] = React.useState<PriceProps>({

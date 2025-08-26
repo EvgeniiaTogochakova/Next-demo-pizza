@@ -6,16 +6,14 @@ import { ProductCard } from './ProductCard';
 import { cn } from '@/lib/utils';
 import { useIntersection } from 'react-use';
 import { useCategoryStore } from '@/store/category';
-
-// import { Title } from './title';
-// import { cn } from '@/shared/lib/utils';
-// import { ProductCard } from './product-card';
-// import { ProductWithRelations } from '@/@types/prisma';
+import { getMinPrice } from '@/lib/getMinPrice';
+import { ProductWithRelations } from '@/lib/prisma-types';
 
 interface Props {
   title: string;
-  //   items: ProductWithRelations[];
-  items: any[];
+  items: ProductWithRelations[];
+  // items: any[];
+  // items: Product[];
   categoryId: number;
   className?: string;
   listClassName?: string;
@@ -30,7 +28,6 @@ export const ProductsGroupList: React.FC<Props> = ({
 }) => {
   const setActiveCategoryId = useCategoryStore((state) => state.setActiveId);
 
-  
   const intersectionRef = React.useRef(null);
 
   const intersection = useIntersection(intersectionRef, {
@@ -40,7 +37,6 @@ export const ProductsGroupList: React.FC<Props> = ({
   React.useEffect(() => {
     if (intersection?.isIntersecting) {
       setActiveCategoryId(categoryId);
-      
     }
   }, [categoryId, intersection?.isIntersecting]);
 
@@ -55,8 +51,9 @@ export const ProductsGroupList: React.FC<Props> = ({
             id={product.id}
             name={product.name}
             imageUrl={product.imageUrl}
-            price={product.items[0].price}
-            // ingredients={product.ingredients}
+            // price={product.items[0].price}
+            price={getMinPrice(product.items)}
+            ingredients={product.ingredients}
           />
         ))}
       </div>
