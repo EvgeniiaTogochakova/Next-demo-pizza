@@ -1,5 +1,4 @@
-import { Container, ProductImage, Title } from '@/components/shared';
-import { GroupVariants } from '@/components/shared/group-variants';
+import { Container, GroupVariants, ProductImage, Title } from '@/components/shared';
 import { ProductWithRelations } from '@/lib/prisma-types';
 import { prisma } from '@/prisma/prisma-client';
 import { notFound } from 'next/navigation';
