@@ -8,6 +8,8 @@ export default async function ProductPage({
 }: {
   params: { id: string };
 }): Promise<JSX.Element> {
+  console.log('Full product page rendered', { id }); // Добавьте в самое начало функции
+
   const product: ProductWithRelations | null = await prisma.product.findFirst({
     where: { id: Number(id) },
     include: {
