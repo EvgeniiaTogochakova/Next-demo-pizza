@@ -1,4 +1,4 @@
-import { Container, GroupVariants, ProductImage, Title } from '@/components/shared';
+import { Container, GroupVariants, ProductImage, Title } from '@/shared/components/shared';
 import { ProductWithRelations } from '@/@types/prisma-types';
 import { prisma } from '@/prisma/prisma-client';
 import { notFound } from 'next/navigation';

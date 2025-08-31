@@ -1,8 +1,8 @@
 'use client';
 
-import { useCategories } from '@/hooks';
-import { cn } from '@/lib/utils';
-import { useCategoryStore } from '@/store/category';
+import { useCategories } from '@/shared/hooks';
+import { cn } from '@/shared/lib/utils';
+import { useCategoryStore } from '@/shared/store/category';
 import React from 'react';
 import { Skeleton } from '../ui';
 import { CategoryWithRelations } from '@/@types/prisma-types';

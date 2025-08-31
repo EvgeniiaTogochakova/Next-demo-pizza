@@ -1,8 +1,8 @@
 'use client';
 
-import { Container, Filters, ProductsGroupList, TopBar } from '@/components/shared';
-import { Title } from '@/components/shared/Title';
-import { useCategories } from '@/hooks';
+import { Container, Filters, ProductsGroupList, TopBar } from '@/shared/components/shared';
+import { Title } from '@/shared/components/shared/Title';
+import { useCategories } from '@/shared/hooks';
 
 export default function Home() {
   const { categories } = useCategories();

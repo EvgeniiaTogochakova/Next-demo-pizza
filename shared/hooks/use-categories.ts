@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Api } from '@/services/api-client';
+import { Api } from '@/shared/services/api-client';
 import { CategoryWithRelations } from '@/@types/prisma-types';
 
 export const useCategories = () => {

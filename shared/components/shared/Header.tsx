@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { Container } from './Container';
 import Image from 'next/image';
 import { Button } from '../ui';

@@ -3,10 +3,10 @@
 import React from 'react';
 import { Title } from './Title';
 import { ProductCard } from './ProductCard';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { useIntersection } from 'react-use';
-import { useCategoryStore } from '@/store/category';
-import { getMinPrice } from '@/lib/getMinPrice';
+import { useCategoryStore } from '@/shared/store/category';
+import { getMinPrice } from '@/shared/lib/getMinPrice';
 import { ProductWithRelations } from '@/@types/prisma-types';
 
 interface Props {
