@@ -11,3 +11,6 @@ export { ProductCard } from './ProductCard';
 export { ProductsGroupList } from './ProductsGroupList';
 export { ProductImage } from './ProductImage';
 export { GroupVariants } from './GroupVariants';
+export { ChooseProductForm } from './ChooseProductForm';
+export { ChoosePizzaForm } from './ChoosePizzaForm';
+export * from './modals';

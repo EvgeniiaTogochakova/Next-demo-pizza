@@ -3,11 +3,11 @@
 import React from 'react';
 
 import { Api } from '@/services/api-client';
-import { CategoryWithRelations } from '@/lib/prisma-types';
+import { CategoryWithRelations } from '@/@types/prisma-types';
 
 export const useCategories = () => {
   const [categories, setCategories] = React.useState<CategoryWithRelations[]>([]);
-  
+
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {

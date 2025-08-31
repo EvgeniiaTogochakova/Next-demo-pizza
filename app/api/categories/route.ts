@@ -1,4 +1,4 @@
-import { CategoryWithRelations } from '@/lib/prisma-types';
+import { CategoryWithRelations } from '@/@types/prisma-types';
 import { prisma } from '@/prisma/prisma-client';
 import { NextResponse } from 'next/server';
 

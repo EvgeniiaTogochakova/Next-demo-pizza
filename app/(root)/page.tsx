@@ -16,7 +16,7 @@ export default function Home() {
       <Container className="mt-10 border">
         <Title text="Все пиццы" size="lg" className="font-extrabold" />
       </Container>
-      <TopBar categories={categories.filter(category=>category.products.length>0)}/>
+      <TopBar categories={categories.filter((category) => category.products.length > 0)} />
 
       <Container className="mt-10 pb-14 border">
         <div className="flex gap-[80px]">

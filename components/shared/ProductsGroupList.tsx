@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { useIntersection } from 'react-use';
 import { useCategoryStore } from '@/store/category';
 import { getMinPrice } from '@/lib/getMinPrice';
-import { ProductWithRelations } from '@/lib/prisma-types';
+import { ProductWithRelations } from '@/@types/prisma-types';
 
 interface Props {
   title: string;

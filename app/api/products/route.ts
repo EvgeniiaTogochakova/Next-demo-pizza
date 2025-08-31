@@ -1,8 +1,8 @@
-import { ProductWithRelations } from '@/lib/prisma-types';
+import { ProductWithRelations } from '@/@types/prisma-types';
 import { prisma } from '@/prisma/prisma-client';
 import { NextResponse } from 'next/server';
 
-export async function GET():Promise<NextResponse<ProductWithRelations[]>> {
+export async function GET(): Promise<NextResponse<ProductWithRelations[]>> {
   const products = await prisma.product.findMany({
     include: {
       ingredients: true,
@@ -13,7 +13,6 @@ export async function GET():Promise<NextResponse<ProductWithRelations[]>> {
   return NextResponse.json(products);
 }
 
-
 // export const getProductWithRelations = async (): Promise<ProductWithRelations[]> => {
 //   return await prisma.product.findMany({
 //     include: {
@@ -22,4 +21,3 @@ export async function GET():Promise<NextResponse<ProductWithRelations[]>> {
 //     },
 //   });
 // };
-

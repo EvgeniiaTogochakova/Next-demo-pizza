@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { useCategoryStore } from '@/store/category';
 import React from 'react';
 import { Skeleton } from '../ui';
-import { CategoryWithRelations } from '@/lib/prisma-types';
+import { CategoryWithRelations } from '@/@types/prisma-types';
 
 interface Props {
   className?: string;
