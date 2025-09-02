@@ -4,7 +4,13 @@ import React from 'react';
 import { useSet } from 'react-use';
 import { Ingredient, ProductItem } from '@prisma/client';
 
-import { calcOnePizzaPrice, calcTotalIngredientPrice, calcTotalPizzaPrice, cn } from '@/shared/lib';
+import {
+  calcOnePizzaPrice,
+  calcTotalIngredientPrice,
+  calcTotalPizzaPrice,
+  cn,
+  getRankedPizzaSizes,
+} from '@/shared/lib';
 import { ProductImage } from './ProductImage';
 import { Title } from './Title';
 import { Button } from '../ui';
@@ -41,10 +47,10 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]));
 
   const pizzaPrice = calcOnePizzaPrice(type, size, items);
-  
+
   console.log('одна пицца стоит ', pizzaPrice);
 
-  const totalIngredientsPrice = calcTotalIngredientPrice(ingredients, selectedIngredients );
+  const totalIngredientsPrice = calcTotalIngredientPrice(ingredients, selectedIngredients);
 
   console.log('одни выбранные ингредиенты стоят ', totalIngredientsPrice);
 
@@ -65,14 +71,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     console.log({ size, type, ingredients: selectedIngredients });
   };
 
-  const availableItemssWithThisType = items.filter((item) => item.pizzaType === type);
-  console.log(availableItemssWithThisType);
-
-  const rankedPizzaSizes = pizzaSizes.map((variant) => ({
-    name: variant.name,
-    value: variant.value,
-    disabled: !availableItemssWithThisType.some((item) => item.size === Number(variant.value)),
-  }));
+  const rankedPizzaSizes = getRankedPizzaSizes(type, items);
   console.log(rankedPizzaSizes);
 
   React.useEffect(() => {
