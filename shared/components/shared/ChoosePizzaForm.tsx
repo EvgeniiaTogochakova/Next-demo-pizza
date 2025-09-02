@@ -4,7 +4,7 @@ import React from 'react';
 import { useSet } from 'react-use';
 import { Ingredient, ProductItem } from '@prisma/client';
 
-import { cn } from '@/shared/lib/utils';
+import { calcOnePizzaPrice, calcTotalIngredientPrice, calcTotalPizzaPrice, cn } from '@/shared/lib';
 import { ProductImage } from './ProductImage';
 import { Title } from './Title';
 import { Button } from '../ui';
@@ -40,17 +40,15 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   const [type, setType] = React.useState<PizzaType>(1);
   const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]));
 
-  const pizzaPrice = items.find((item) => item.pizzaType === type && item.size === size)?.price;
-
+  const pizzaPrice = calcOnePizzaPrice(type, size, items);
+  
   console.log('одна пицца стоит ', pizzaPrice);
 
-  const totalIngredientsPrice = ingredients
-    .filter((ingredient) => selectedIngredients.has(ingredient.id))
-    .reduce((acc, ingr) => acc + ingr.price, 0);
+  const totalIngredientsPrice = calcTotalIngredientPrice(ingredients, selectedIngredients );
 
   console.log('одни выбранные ингредиенты стоят ', totalIngredientsPrice);
 
-  const totalPrice = (pizzaPrice || 0) + totalIngredientsPrice;
+  const totalPrice = calcTotalPizzaPrice(pizzaPrice, totalIngredientsPrice);
 
   console.log('сумма к оплате ', totalPrice);
 
@@ -78,7 +76,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   console.log(rankedPizzaSizes);
 
   React.useEffect(() => {
-    const firstAvailableVariant=rankedPizzaSizes.find(item=>!item.disabled);
+    const firstAvailableVariant = rankedPizzaSizes.find((item) => !item.disabled);
     if (!firstAvailableVariant) return;
     setSize(Number(firstAvailableVariant.value) as PizzaSize);
   }, [type]);
