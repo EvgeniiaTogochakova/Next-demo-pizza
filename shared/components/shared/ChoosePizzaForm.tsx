@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { useSet } from 'react-use';
 import { Ingredient, ProductItem } from '@prisma/client';
 
 import {
@@ -24,6 +23,7 @@ import {
 } from '@/shared/constants/pizza';
 import { GroupVariants, Variant } from './GroupVariants';
 import { IngredientItem } from './IngredientItem';
+import { usePizzaOptions } from '@/shared/hooks';
 
 interface Props {
   imageUrl: string;
@@ -42,21 +42,17 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   onClickAddCart,
   className,
 }) => {
-  const [size, setSize] = React.useState<PizzaSize>(20);
-  const [type, setType] = React.useState<PizzaType>(1);
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]));
+  // const [size, setSize] = React.useState<PizzaSize>(20);
+  // const [type, setType] = React.useState<PizzaType>(1);
+  // const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]));
 
+  const { size, type, selectedIngredients, setSize, setType, addIngredient, rankedPizzaSizes } =
+    usePizzaOptions(items);
   const pizzaPrice = calcOnePizzaPrice(type, size, items);
-
-  console.log('одна пицца стоит ', pizzaPrice);
 
   const totalIngredientsPrice = calcTotalIngredientPrice(ingredients, selectedIngredients);
 
-  console.log('одни выбранные ингредиенты стоят ', totalIngredientsPrice);
-
   const totalPrice = calcTotalPizzaPrice(pizzaPrice, totalIngredientsPrice);
-
-  console.log('сумма к оплате ', totalPrice);
 
   const isDisabled: boolean = totalPrice === totalIngredientsPrice;
 
@@ -71,14 +67,13 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     console.log({ size, type, ingredients: selectedIngredients });
   };
 
-  const rankedPizzaSizes = getRankedPizzaSizes(type, items);
-  console.log(rankedPizzaSizes);
+  // const rankedPizzaSizes = getRankedPizzaSizes(type, items);
 
-  React.useEffect(() => {
-    const firstAvailableVariant = rankedPizzaSizes.find((item) => !item.disabled);
-    if (!firstAvailableVariant) return;
-    setSize(Number(firstAvailableVariant.value) as PizzaSize);
-  }, [type]);
+  // React.useEffect(() => {
+  //   const firstAvailableVariant = rankedPizzaSizes.find((item) => !item.disabled);
+  //   if (!firstAvailableVariant) return;
+  //   setSize(Number(firstAvailableVariant.value) as PizzaSize);
+  // }, [type]);
 
   return (
     <div className={cn(className, 'flex flex-1')}>
