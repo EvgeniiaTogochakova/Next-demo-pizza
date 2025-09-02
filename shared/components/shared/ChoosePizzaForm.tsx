@@ -3,25 +3,13 @@
 import React from 'react';
 import { Ingredient, ProductItem } from '@prisma/client';
 
-import {
-  calcOnePizzaPrice,
-  calcTotalIngredientPrice,
-  calcTotalPizzaPrice,
-  cn,
-  getRankedPizzaSizes,
-} from '@/shared/lib';
+import { cn, getPizzaDetails } from '@/shared/lib';
 import { ProductImage } from './ProductImage';
 import { Title } from './Title';
 import { Button } from '../ui';
 
-import {
-  pizzaSizes,
-  pizzaTypes,
-  PizzaSize,
-  PizzaType,
-  mapPizzaType,
-} from '@/shared/constants/pizza';
-import { GroupVariants, Variant } from './GroupVariants';
+import { pizzaTypes, PizzaSize, PizzaType } from '@/shared/constants/pizza';
+import { GroupVariants } from './GroupVariants';
 import { IngredientItem } from './IngredientItem';
 import { usePizzaOptions } from '@/shared/hooks';
 
@@ -42,38 +30,21 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   onClickAddCart,
   className,
 }) => {
-  // const [size, setSize] = React.useState<PizzaSize>(20);
-  // const [type, setType] = React.useState<PizzaType>(1);
-  // const [selectedIngredients, { toggle: addIngredient }] = useSet(new Set<number>([]));
-
   const { size, type, selectedIngredients, setSize, setType, addIngredient, rankedPizzaSizes } =
     usePizzaOptions(items);
-  const pizzaPrice = calcOnePizzaPrice(type, size, items);
 
-  const totalIngredientsPrice = calcTotalIngredientPrice(ingredients, selectedIngredients);
-
-  const totalPrice = calcTotalPizzaPrice(pizzaPrice, totalIngredientsPrice);
-
-  const isDisabled: boolean = totalPrice === totalIngredientsPrice;
-
-  const buttonText = isDisabled
-    ? 'Нет пиццы в таком сочетании'
-    : `Добавить в корзину за ${totalPrice} ₽`;
-
-  const textDetails = `${size} см, ${mapPizzaType[type]} пицца`;
+  const { isDisabled, buttonText, textDetails } = getPizzaDetails(
+    type,
+    size,
+    items,
+    ingredients,
+    selectedIngredients,
+  );
 
   const handleClickAdd = () => {
     onClickAddCart?.();
     console.log({ size, type, ingredients: selectedIngredients });
   };
-
-  // const rankedPizzaSizes = getRankedPizzaSizes(type, items);
-
-  // React.useEffect(() => {
-  //   const firstAvailableVariant = rankedPizzaSizes.find((item) => !item.disabled);
-  //   if (!firstAvailableVariant) return;
-  //   setSize(Number(firstAvailableVariant.value) as PizzaSize);
-  // }, [type]);
 
   return (
     <div className={cn(className, 'flex flex-1')}>
