@@ -6,7 +6,7 @@ import { useFilters, useIngredients, useQueryFilters } from '@/shared/hooks';
 
 import { Title } from './Title';
 import { CheckboxFiltersGroup } from './CheckboxFiltersGroup';
-import { Input } from '../ui';
+import { Input } from '@/shared/components/ui';
 import { RangeSlider } from './RandgeSlider';
 
 interface Props {

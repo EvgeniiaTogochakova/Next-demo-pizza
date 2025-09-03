@@ -6,7 +6,7 @@ import { Ingredient, ProductItem } from '@prisma/client';
 import { cn, getPizzaDetails } from '@/shared/lib';
 import { ProductImage } from './ProductImage';
 import { Title } from './Title';
-import { Button } from '../ui';
+import { Button } from '@/shared/components/ui';
 
 import { pizzaTypes, PizzaSize, PizzaType } from '@/shared/constants/pizza';
 import { GroupVariants } from './GroupVariants';

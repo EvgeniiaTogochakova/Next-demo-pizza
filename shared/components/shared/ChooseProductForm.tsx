@@ -3,7 +3,7 @@
 import { cn } from '@/shared/lib';
 import React from 'react';
 import { Title } from './Title';
-import { Button } from '../ui';
+import { Button } from '@/shared/components/ui';
 
 interface Props {
   imageUrl: string;

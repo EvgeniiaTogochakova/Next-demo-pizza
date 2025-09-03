@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { FilterCheckboxProps, FilterCheckbox } from './FilterChekbox';
-import { Input } from '../ui/input';
-import { Skeleton } from '../ui';
+import { Input } from '@/shared/components/ui/input';
+import { Skeleton } from '@/shared/components/ui';
 
 type Item = FilterCheckboxProps;
 

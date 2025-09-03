@@ -4,7 +4,7 @@ import React from 'react';
 import { useCategories } from '@/shared/hooks';
 import { cn } from '@/shared/lib';
 import { useCategoryStore } from '@/shared/store/category';
-import { Skeleton } from '../ui';
+import { Skeleton } from '@/shared/components/ui';
 import { CategoryWithRelations } from '@/@types/prisma-types';
 
 interface Props {
