@@ -16,4 +16,6 @@ export { ChoosePizzaForm } from './ChoosePizzaForm';
 export { IngredientItem } from './IngredientItem';
 export { CartButton } from './CartButton';
 export { CartDrawer } from './CartDrawer';
+export { CountButton } from './CountButton';
+export { CountIconButton } from './CountIconButton';
 export * from './modals';

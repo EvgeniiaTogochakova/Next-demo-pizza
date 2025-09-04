@@ -2,4 +2,5 @@ export { calcTotalIngredientPrice, calcOnePizzaPrice, calcTotalPizzaPrice } from
 export { getRankedPizzaSizes } from './getRankedPizzaSizes';
 export { getPizzaDetails } from './getPizzaDetails';
 export { getMinPrice } from './getMinPrice';
+export { getCartItemDetails } from './getCartITemDetails';
 export { cn } from './utils';

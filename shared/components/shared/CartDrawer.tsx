@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren } from 'react';
 import {
   Sheet,
@@ -11,6 +13,8 @@ import {
 import Link from 'next/link';
 import { Button } from '@/shared/components/ui';
 import { ArrowRight } from 'lucide-react';
+import { CartDrawerItem } from './CartDrawerItem';
+import { getCartItemDetails } from '@/shared/lib';
 
 interface Props {
   className?: string;
@@ -29,6 +33,15 @@ export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ children, class
         </SheetHeader>
 
         {/* Items */}
+        <CartDrawerItem
+          id={1}
+          name="Чоризо фреш"
+          details={getCartItemDetails(2,30,[])}
+          imageUrl="https://intuition.news/images/dodo/illustr/Dodo_all-people-7.png"
+          price={419}
+          quantity={1}
+          className="bg-purple-200"
+        />
 
         <SheetFooter className="-mx-6 bg-white p-8">
           <div className="w-full">

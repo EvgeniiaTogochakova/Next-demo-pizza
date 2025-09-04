@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRight, ShoppingCart } from 'lucide-react';
 import { Button } from '@/shared/components/ui';
 import { cn } from '@/shared/lib';
