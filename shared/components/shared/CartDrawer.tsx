@@ -1,9 +1,9 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 import {
   Sheet,
-  SheetClose,
+  // SheetClose,
   SheetContent,
   SheetHeader,
   SheetFooter,
@@ -15,12 +15,28 @@ import { Button } from '@/shared/components/ui';
 import { ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from './CartDrawerItem';
 import { getCartItemDetails } from '@/shared/lib';
+import { useCartStore } from '@/shared/store';
+import { PizzaType, PizzaSize } from '@/shared/constants/pizza';
 
 interface Props {
   className?: string;
 }
 
 export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ children, className }) => {
+  // const [fetchCartItems, totalAmount, items] = useCartStore((state) => [
+  //   state.fetchCartItems,
+  //   state.totalAmount,
+  //   state.items,
+  // ]);
+
+  const fetchCartItems = useCartStore((state) => state.fetchCartItems);
+  const totalAmount = useCartStore((state) => state.totalAmount);
+  const items = useCartStore((state) => state.items);
+
+  React.useEffect(() => {
+    fetchCartItems();
+  }, []);
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
@@ -32,16 +48,28 @@ export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ children, class
           </SheetTitle>
         </SheetHeader>
 
-        {/* Items */}
-        <CartDrawerItem
-          id={1}
-          name="Чоризо фреш"
-          details={getCartItemDetails(2,30,[])}
-          imageUrl="https://intuition.news/images/dodo/illustr/Dodo_all-people-7.png"
-          price={419}
-          quantity={1}
-          className="bg-purple-200"
-        />
+        <div className="-mx-6 mt-5 overflow-auto flex-1">
+          {items.map((item) => (
+            <div key={item.id} className="mb-2">
+              <CartDrawerItem
+                id={item.id}
+                name={item.name}
+                details={
+                  item.pizzaSize && item.pizzaType
+                    ? getCartItemDetails(
+                        item.ingredients,
+                        item.pizzaType as PizzaType,
+                        item.pizzaSize as PizzaSize,
+                      )
+                    : ''
+                }
+                imageUrl={item.imageUrl}
+                price={item.price}
+                quantity={item.quantity}
+              />
+            </div>
+          ))}
+        </div>
 
         <SheetFooter className="-mx-6 bg-white p-8">
           <div className="w-full">
@@ -51,7 +79,7 @@ export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ children, class
                 <div className="flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2" />
               </span>
 
-              <span className="font-bold text-lg">500 ₽</span>
+              <span className="font-bold text-lg">{totalAmount} ₽</span>
             </div>
 
             <Link href="/cart">

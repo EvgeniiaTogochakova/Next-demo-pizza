@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Category, Ingredient, Prisma, Product, ProductItem } from '@prisma/client';
 
 const productInclude = Prisma.validator<Prisma.ProductInclude>()({
   ingredients: true,
@@ -9,7 +9,6 @@ export type ProductWithRelations = Prisma.ProductGetPayload<{
   include: typeof productInclude;
 }>;
 
-
 const categoryInclude = Prisma.validator<Prisma.CategoryInclude>()({
   products: {
     include: {
@@ -19,13 +18,15 @@ const categoryInclude = Prisma.validator<Prisma.CategoryInclude>()({
   },
 });
 
-
 export type CategoryWithRelations = Prisma.CategoryGetPayload<{
   include: typeof categoryInclude;
 }>;
 
+// export type ProductWithRelations = Product & {
+//   items: ProductItem[];
+//   ingredients: Ingredient[];
+// };
 
-
-
-
-
+// export type CategoryWithRelations = Category & {
+//   products: Product[];
+// };

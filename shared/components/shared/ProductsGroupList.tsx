@@ -5,9 +5,9 @@ import { Title } from './Title';
 import { ProductCard } from './ProductCard';
 import { cn } from '@/shared/lib';
 import { useIntersection } from 'react-use';
-import { useCategoryStore } from '@/shared/store/category';
 import { getMinPrice } from '@/shared/lib/getMinPrice';
 import { ProductWithRelations } from '@/@types/prisma-types';
+import { useCategoryStore } from '@/shared/store';
 
 interface Props {
   title: string;
