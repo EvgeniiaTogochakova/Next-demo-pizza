@@ -1,12 +1,12 @@
-import { CartWithDetails } from '@/@types/prisma-types';
 import { prisma } from '@/prisma/prisma-client';
 import { updateCartTotalAmount } from '@/shared/lib';
+import { CartDTO } from '@/shared/services/dto/cart.dto';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } },
-): Promise<NextResponse<CartWithDetails | { error: string } | { message: string }>> {
+): Promise<NextResponse<CartDTO | { error: string } | { message: string }>> {
   try {
     const id = Number(params.id);
     const data = (await req.json()) as { quantity: number };

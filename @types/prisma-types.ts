@@ -23,22 +23,22 @@ export type CategoryWithRelations = Prisma.CategoryGetPayload<{
 }>;
 
 
-const cartInclude = Prisma.validator<Prisma.CartInclude>()({
-  items: {
-    include: {
-      productItem: {
-        include: {
-          product: true,
-        },
-      },
-      ingredients: true,
-    },
-  },
-});
+// const cartInclude = Prisma.validator<Prisma.CartInclude>()({
+//   items: {
+//     include: {
+//       productItem: {
+//         include: {
+//           product: true,
+//         },
+//       },
+//       ingredients: true,
+//     },
+//   },
+// });
 
-export type CartWithDetails = Prisma.CartGetPayload<{
-  include: typeof cartInclude;
-}>;
+// export type CartWithDetails = Prisma.CartGetPayload<{
+//   include: typeof cartInclude;
+// }>;
 
 
 // export type ProductWithRelations = Product & {

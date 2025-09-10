@@ -1,10 +1,10 @@
-import { CartWithDetails } from '@/@types/prisma-types';
 import { prisma } from '@/prisma/prisma-client';
 import { calcCartItemTotalPrice } from '@/shared/lib/calcCartItemTotalPrice';
+import { CartDTO } from '../services/dto/cart.dto';
 
 export const updateCartTotalAmount = async (
   token: string,
-): Promise<CartWithDetails | undefined> => {
+): Promise<CartDTO | undefined> => {
   const userCart = await prisma.cart.findFirst({
     where: {
       token,
