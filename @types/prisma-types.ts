@@ -22,6 +22,25 @@ export type CategoryWithRelations = Prisma.CategoryGetPayload<{
   include: typeof categoryInclude;
 }>;
 
+
+const cartInclude = Prisma.validator<Prisma.CartInclude>()({
+  items: {
+    include: {
+      productItem: {
+        include: {
+          product: true,
+        },
+      },
+      ingredients: true,
+    },
+  },
+});
+
+export type CartWithDetails = Prisma.CartGetPayload<{
+  include: typeof cartInclude;
+}>;
+
+
 // export type ProductWithRelations = Product & {
 //   items: ProductItem[];
 //   ingredients: Ingredient[];
