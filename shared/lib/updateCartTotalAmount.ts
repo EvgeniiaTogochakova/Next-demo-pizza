@@ -58,3 +58,6 @@ export const updateCartTotalAmount = async (
     },
   });
 };
+
+
+// чистая серверная (server) функция

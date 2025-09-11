@@ -24,3 +24,6 @@ export const getPizzaDetails = (
   const textDetails = `${size} см, ${mapPizzaType[type]} пицца`;
   return { isDisabled, buttonText, textDetails };
 };
+
+// Эта функция универсальная (shared), т.к. это, по сути, защита от недобросовестного пользователя в браузере.
+// Вот поэтому она точно не может быть чисто серверной.

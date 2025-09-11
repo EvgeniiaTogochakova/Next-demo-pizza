@@ -4,3 +4,6 @@ export const calcCartItemTotalPrice = (item: CartItemDTO):number => {
   const ingredientPrice = item.ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0);
   return (ingredientPrice + item.productItem.price) * item.quantity;
 };
+
+
+// универсальная функция=shared

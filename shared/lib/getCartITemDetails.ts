@@ -20,3 +20,5 @@ export const getCartItemDetails = (
 
   return details.join(', ');
 };
+
+// универсальная (shared)  функция

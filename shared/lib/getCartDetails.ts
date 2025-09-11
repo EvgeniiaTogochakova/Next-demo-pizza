@@ -74,3 +74,8 @@ export const getCartDetails = (data: CartDTO): ReturnProps => {
     totalAmount,
   };
 };
+
+
+// это типичный преобразователь (DTO -> View Model)
+// но, в принципе, функции неважно, откуда пришли данные, она просто делает новые типы
+// поэтому можно счесть ее универсальной (shared)

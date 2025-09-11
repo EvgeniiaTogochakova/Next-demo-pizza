@@ -11,3 +11,6 @@ export const getRankedPizzaSizes = (type: PizzaType, items: ProductItem[]): Vari
     disabled: !availableItemssWithThisType.some((item) => item.size === Number(variant.value)),
   }));
 };
+
+
+//универсальная (shared) функция

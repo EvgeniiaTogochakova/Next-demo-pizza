@@ -43,3 +43,6 @@ export const calcOnePizzaPrice = (
 
 export const calcTotalPizzaPrice = (pizzaPrice: number|undefined, totalIngredientsPrice: number) =>
   (pizzaPrice || 0) + totalIngredientsPrice;
+
+
+// универсальные функции=shared
