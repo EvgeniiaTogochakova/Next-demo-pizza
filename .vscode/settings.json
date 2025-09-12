@@ -1,1 +1,20 @@
-{}
+{
+  "sqltools.connections": [
+    {
+      "pgOptions": {
+        "ssl": {
+          "rejectUnauthorized": true
+        }
+      },
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "db.prisma.io",
+      "driver": "PostgreSQL",
+      "name": "pg-next-pizza",
+      "database": "next-pizza",
+      "username": "26c3355281d7a2851e70b83d0bf53a626b1739c7fb7707154342914b60eeb99c",
+      "password": "sk_9POEt9ikce6dJTOOCAOSq",
+      "connectString": "postgres://26c3355281d7a2851e70b83d0bf53a626b1739c7fb7707154342914b60eeb99c:sk_9POEt9ikce6dJTOOCAOSq@db.prisma.io:5432/?sslmode=require"
+    }
+  ]
+}
