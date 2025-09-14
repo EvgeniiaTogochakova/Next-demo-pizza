@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { Container, Filters, ProductsGroupList, TopBar } from '@/shared/components/shared';
 import { Title } from '@/shared/components/shared/Title';
 import { useCategories } from '@/shared/hooks';
@@ -22,7 +23,9 @@ export default function Home() {
         <div className="flex gap-[80px]">
           {/* Фильтрация  */}
           <div className="w-250px">
-            <Filters />
+            <Suspense>
+              <Filters />
+            </Suspense>
           </div>
 
           {/* Список товаров */}
