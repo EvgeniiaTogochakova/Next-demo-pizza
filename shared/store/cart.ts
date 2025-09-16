@@ -4,7 +4,6 @@ import { Api } from '@/shared/services/api-client';
 import { CartStateItem } from '@/shared/lib/getCartDetails';
 import { CreateCartItemValues } from '@/shared/services/dto/cart.dto';
 
-
 export interface CartState {
   loading: boolean;
   error: boolean;
@@ -37,8 +36,10 @@ export const useCartStore = create<CartState>()((set, get) => ({
       const data = await Api.cart.getCart();
       set(getCartDetails(data));
     } catch (error) {
-      console.error(error);
-      set({ error: true });
+      if (error instanceof Error) {
+        console.error(error);
+        set({ error: true });
+      }
     } finally {
       set({ loading: false });
     }
@@ -50,8 +51,10 @@ export const useCartStore = create<CartState>()((set, get) => ({
       const data = await Api.cart.updateItemQuantity(id, quantity);
       set(getCartDetails(data));
     } catch (error) {
-      console.error(error);
-      set({ error: true });
+      if (error instanceof Error) {
+        console.error(error);
+        set({ error: true });
+      }
     } finally {
       set({ loading: false });
     }
@@ -83,13 +86,14 @@ export const useCartStore = create<CartState>()((set, get) => ({
       const data = await Api.cart.removeCartItem(id);
       set(getCartDetails(data));
     } catch (error) {
-      console.error(error);
-      set({ error: true });
+      if (error instanceof Error) {
+        console.error(error);
+        set({ error: true });
+      }
     } finally {
       set({ loading: false });
     }
   },
-
 
   addCartItem: async (values: CreateCartItemValues) => {
     try {
@@ -97,8 +101,10 @@ export const useCartStore = create<CartState>()((set, get) => ({
       const data = await Api.cart.addCartItem(values);
       set(getCartDetails(data));
     } catch (error) {
-      console.error(error);
-      set({ error: true });
+      if (error instanceof Error) {
+        console.error(error);
+        set({ error: true });
+      }
     } finally {
       set({ loading: false });
     }

@@ -1,12 +1,12 @@
-'use client';
-
 import { Suspense } from 'react';
 import { Container, Filters, ProductsGroupList, TopBar } from '@/shared/components/shared';
 import { Title } from '@/shared/components/shared/Title';
-import { useCategories } from '@/shared/hooks';
+// import { useCategories } from '@/shared/hooks';
+import { findPizzas, GetSearchParams } from '@/shared/lib/findPizzas';
 
-export default function Home() {
-  const { categories } = useCategories();
+export default async function Home({searchParams}:{searchParams: GetSearchParams}) {
+  // const { categories } = useCategories();
+  const categories = await findPizzas(searchParams);
 
   // const categories = await prisma.category.findMany({});
   // console.log(categories);

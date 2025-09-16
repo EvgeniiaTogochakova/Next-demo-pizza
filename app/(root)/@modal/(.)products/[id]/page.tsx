@@ -8,6 +8,7 @@ export default async function ProductModalPage({
 }: {
   params: { id: string };
 }): Promise<JSX.Element | null> {
+  
   const product: ProductWithRelations | null = await prisma.product.findFirst({
     where: {
       id: Number(id),

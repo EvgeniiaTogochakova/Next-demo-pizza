@@ -18,4 +18,5 @@ export { CartButton } from './CartButton';
 export { CartDrawer } from './CartDrawer';
 export { CountButton } from './CountButton';
 export { CountIconButton } from './CountIconButton';
+export { ProductForm } from './ProductForm';
 export * from './modals';
