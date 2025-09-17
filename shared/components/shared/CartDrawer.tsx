@@ -70,11 +70,12 @@ export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ children, class
                       )
                     : ''
                 }
+                disabled={item.disabled}
                 imageUrl={item.imageUrl}
                 price={item.price}
                 quantity={item.quantity}
                 onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
-                onClickRemove={()=> removeCartItem(item.id)}
+                onClickRemove={() => removeCartItem(item.id)}
               />
             </div>
           ))}
