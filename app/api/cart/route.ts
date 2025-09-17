@@ -1,4 +1,5 @@
 import { prisma } from '@/prisma/prisma-client';
+import { checkArraysEqual } from '@/shared/lib';
 import { findOrCreateCart } from '@/shared/lib/findOrCreateCart';
 import { updateCartTotalAmount } from '@/shared/lib/updateCartTotalAmount';
 import { CartDTO, CreateCartItemValues } from '@/shared/services/dto/cart.dto';
@@ -55,7 +56,6 @@ export async function GET(
   }
 }
 
-
 export async function POST(req: NextRequest) {
   try {
     let token = req.cookies.get('cartToken')?.value;
@@ -68,26 +68,35 @@ export async function POST(req: NextRequest) {
 
     const data = (await req.json()) as CreateCartItemValues;
 
-    const findCartItem = await prisma.cartItem.findFirst({
+    // Находим ВСЕ CartItem с подходящим productItemId
+    const matchingCartItems = await prisma.cartItem.findMany({
       where: {
         cartId: userCart.id,
         productItemId: data.productItemId,
-        ingredients: {
-          every: {
-            id: { in: data.ingredients },
-          },
-        },
+      },
+      include: {
+        ingredients: true,
       },
     });
 
+    let exactMatch;
+    // Ищем точное совпадение по ингредиентам
+    if (data.ingredients) {
+      exactMatch = matchingCartItems.find((item) =>
+        checkArraysEqual(item.ingredients.map((ing) => ing.id).sort(), data.ingredients!.sort()),
+      );
+    } else {
+      exactMatch = matchingCartItems[0];
+    }
+
     // Если товар был найден, делаем +1
-    if (findCartItem) {
+    if (exactMatch) {
       await prisma.cartItem.update({
         where: {
-          id: findCartItem.id,
+          id: exactMatch.id,
         },
         data: {
-          quantity: findCartItem.quantity + 1,
+          quantity: exactMatch.quantity + 1,
         },
       });
     } else {
@@ -108,6 +117,9 @@ export async function POST(req: NextRequest) {
     return resp;
   } catch (error) {
     console.log('[CART_POST] Server error', error);
-    return NextResponse.json({ message: 'Не удалось создать корзину или ее элемент' }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Не удалось создать корзину или ее элемент' },
+      { status: 500 },
+    );
   }
 }
