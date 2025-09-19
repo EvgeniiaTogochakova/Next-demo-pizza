@@ -16,30 +16,27 @@ import { Button } from '@/shared/components/ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from './CartDrawerItem';
 import { cn, getCartItemDetails } from '@/shared/lib';
-import { useCartStore } from '@/shared/store';
 import { PizzaType, PizzaSize } from '@/shared/constants/pizza';
 import { Title } from '@/shared/components/shared/Title';
+import { useCart } from '@/shared/hooks';
 
-interface Props {
-  className?: string;
-}
-
-export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ children, className }) => {
+export const CartDrawer: React.FC<PropsWithChildren> = ({ children }) => {
   // const [fetchCartItems, totalAmount, items] = useCartStore((state) => [
   //   state.fetchCartItems,
   //   state.totalAmount,
   //   state.items,
   // ]);
 
-  const fetchCartItems = useCartStore((state) => state.fetchCartItems);
-  const totalAmount = useCartStore((state) => state.totalAmount);
-  const items = useCartStore((state) => state.items);
-  const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
-  const removeCartItem = useCartStore((state) => state.removeCartItem);
+  // const fetchCartItems = useCartStore((state) => state.fetchCartItems);
+  // const totalAmount = useCartStore((state) => state.totalAmount);
+  // const items = useCartStore((state) => state.items);
+  // const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
+  // const removeCartItem = useCartStore((state) => state.removeCartItem);
 
-  React.useEffect(() => {
-    fetchCartItems();
-  }, []);
+  // React.useEffect(() => {
+  //   fetchCartItems();
+  // }, []);
+  const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart();
 
   const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
     const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1;
@@ -117,7 +114,7 @@ export const CartDrawer: React.FC<PropsWithChildren<Props>> = ({ children, class
                     <span className="font-bold text-lg">{totalAmount} ₽</span>
                   </div>
 
-                  <Link href="/cart">
+                  <Link href="/checkout">
                     <Button type="submit" className="w-full h-12 text-base">
                       Оформить заказ
                       <ArrowRight className="w-5 ml-2" />

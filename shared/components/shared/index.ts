@@ -21,4 +21,6 @@ export { CountIconButton } from './CountIconButton';
 export { ProductForm } from './ProductForm';
 export { WhiteBlock } from './WhiteBlock';
 export { CheckoutItemDetails } from './CheckoutItemDetails';
+export {CheckoutItem} from './CheckoutItem';
+export {CheckoutItemSkeleton} from './CheckoutItemSkeleton'
 export * from './modals';
