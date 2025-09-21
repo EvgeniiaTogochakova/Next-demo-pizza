@@ -1,5 +1,5 @@
 import { ProductItem } from '@prisma/client';
-import { pizzaSizes, PizzaType } from '../constants/pizza';
+import { pizzaSizes, PizzaType } from '@/shared/constants';
 import { Variant } from '../components/shared/GroupVariants';
 
 export const getRankedPizzaSizes = (type: PizzaType, items: ProductItem[]): Variant[] => {

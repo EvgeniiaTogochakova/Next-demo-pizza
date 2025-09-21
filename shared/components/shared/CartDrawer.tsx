@@ -16,7 +16,7 @@ import { Button } from '@/shared/components/ui';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { CartDrawerItem } from './CartDrawerItem';
 import { cn, getCartItemDetails } from '@/shared/lib';
-import { PizzaType, PizzaSize } from '@/shared/constants/pizza';
+import { PizzaType, PizzaSize } from '@/shared/constants';
 import { Title } from '@/shared/components/shared/Title';
 import { useCart } from '@/shared/hooks';
 

@@ -1,4 +1,4 @@
-import { PizzaSize, PizzaType, mapPizzaType } from '../constants/pizza';
+import { PizzaSize, PizzaType, mapPizzaType } from '@/shared/constants';
 import { CartStateItem } from '@/shared/lib';
 // import { CartStateItem } from './get-cart-details';
 

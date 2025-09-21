@@ -8,7 +8,7 @@ import { ProductImage } from './ProductImage';
 import { Title } from './Title';
 import { Button } from '@/shared/components/ui';
 
-import { pizzaTypes, PizzaSize, PizzaType } from '@/shared/constants/pizza';
+import { pizzaTypes, PizzaSize, PizzaType } from '@/shared/constants';
 import { GroupVariants } from './GroupVariants';
 import { IngredientItem } from './IngredientItem';
 import { usePizzaOptions } from '@/shared/hooks';

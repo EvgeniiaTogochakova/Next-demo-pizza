@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { useSet } from 'react-use';
-import { PizzaSize, PizzaType } from '../constants/pizza';
+import { PizzaSize, PizzaType } from '@/shared/constants';
 import { Variant } from '../components/shared/GroupVariants';
-import { getRankedPizzaSizes } from '../lib';
+import { getRankedPizzaSizes } from '@/shared/lib';
 import { ProductItem } from '@prisma/client';
 
 interface ReturnProps {
