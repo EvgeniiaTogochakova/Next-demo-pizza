@@ -15,7 +15,7 @@ interface Props {
 
 export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading, className }) => {
   const vatPrice = (totalAmount * VAT) / 100;
-  const totalPrice = totalAmount + DELIVERY_PRICE + vatPrice;
+  const totalPrice = totalAmount > 0? (totalAmount + DELIVERY_PRICE + vatPrice) : 0;
 
   return (
     <WhiteBlock className={cn('p-6 sticky top-4', className)}>
@@ -53,7 +53,8 @@ export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading, classNa
             Доставка:
           </div>
         }
-        value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : `${DELIVERY_PRICE} ₽`}
+        value={loading ? <Skeleton className="h-6 w-16 rounded-[6px]" /> : 
+          totalAmount > 0 ? `${DELIVERY_PRICE} ₽` : 0}
       />
 
       <Button

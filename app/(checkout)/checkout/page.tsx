@@ -1,10 +1,9 @@
-'use client'
+'use client';
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
-  CheckoutItem,
   CheckoutSidebar,
   Container,
   FormInput,
@@ -13,12 +12,12 @@ import {
 } from '@/shared/components/shared';
 import { Input, Textarea } from '@/shared/components/ui';
 import { useCart } from '@/shared/hooks';
-import { getCartItemDetails } from '@/shared/lib';
-import { checkoutFormSchema, CheckoutFormValues, PizzaSize, PizzaType } from '@/shared/constants';
+import { checkoutFormSchema, CheckoutFormValues } from '@/shared/constants';
+import { CheckoutCart } from '@/shared/components/shared/checkout';
 
 export default function CheckoutPage() {
   const { items, totalAmount, loading, removeCartItem, updateItemQuantity } = useCart();
-  
+
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
@@ -44,28 +43,12 @@ export default function CheckoutPage() {
         <div className="flex gap-10">
           {/* Левая часть */}
           <div className="flex flex-col gap-10 flex-1 mb-20">
-            <WhiteBlock title="1. Корзина">
-              <div className="flex flex-col gap-5">
-                {items.map((item) => (
-                  <CheckoutItem
-                    key={item.id}
-                    id={item.id}
-                    imageUrl={item.imageUrl}
-                    details={getCartItemDetails(
-                      item.ingredients,
-                      item.pizzaType as PizzaType,
-                      item.pizzaSize as PizzaSize,
-                    )}
-                    name={item.name}
-                    price={item.price}
-                    quantity={item.quantity}
-                    disabled={item.disabled}
-                    onClickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
-                    onClickRemove={() => removeCartItem(item.id)}
-                  />
-                ))}
-              </div>
-            </WhiteBlock>
+            <CheckoutCart
+              items={items}
+              loading={loading}
+              onClickCountButton={onClickCountButton}
+              removeCartItem={removeCartItem}
+            />
 
             <WhiteBlock title="2. Персональные данные">
               <div className="grid grid-cols-2 gap-5">
