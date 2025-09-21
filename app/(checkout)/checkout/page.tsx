@@ -13,7 +13,7 @@ import {
 import { Input, Textarea } from '@/shared/components/ui';
 import { useCart } from '@/shared/hooks';
 import { checkoutFormSchema, CheckoutFormValues } from '@/shared/constants';
-import { CheckoutCart } from '@/shared/components/shared/checkout';
+import { CheckoutCart, CheckoutPersonalForm } from '@/shared/components/shared/checkout';
 
 export default function CheckoutPage() {
   const { items, totalAmount, loading, removeCartItem, updateItemQuantity } = useCart();
@@ -50,14 +50,7 @@ export default function CheckoutPage() {
               removeCartItem={removeCartItem}
             />
 
-            <WhiteBlock title="2. Персональные данные">
-              <div className="grid grid-cols-2 gap-5">
-                <Input name="firstName" className="text-base" placeholder="Имя" />
-                <Input name="lastName" className="text-base" placeholder="Фамилия" />
-                <Input name="email" className="text-base" placeholder="E-Mail" />
-                <FormInput name="phone" className="text-base" placeholder="Телефон" />
-              </div>
-            </WhiteBlock>
+            <CheckoutPersonalForm className={loading ? 'opacity-40 pointer-events-none' : ''} />
 
             <WhiteBlock title="3. Адрес доставки">
               <div className="flex flex-col gap-5">
