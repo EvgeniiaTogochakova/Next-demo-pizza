@@ -21,7 +21,7 @@ export const FormInput: React.FC<Props> = ({ className, name, label, required, .
     setValue,
   } = useFormContext();
 
-  const value = watch(name);
+  const value = watch(name);              // текст поля, за которым ведется наблюдение
   const errorText = errors[name]?.message as string;
 
   const onClickClear = () => {
