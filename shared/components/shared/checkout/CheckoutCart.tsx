@@ -1,3 +1,5 @@
+'use client';
+
 import { PizzaSize, PizzaType } from '@/shared/constants';
 import { CheckoutItem } from '../CheckoutItem';
 import { WhiteBlock } from '../WhiteBlock';
