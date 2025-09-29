@@ -2,6 +2,7 @@
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import React from 'react';
 
 import { useCart } from '@/shared/hooks';
 import { checkoutFormSchema, CheckoutFormValues } from '@/shared/constants';
@@ -15,7 +16,6 @@ import {
 } from '@/shared/components';
 import { createOrder } from '@/app/actions/orders/createOrder';
 import toast from 'react-hot-toast';
-import React from 'react';
 
 
 export default function CheckoutPage() {
@@ -34,7 +34,7 @@ export default function CheckoutPage() {
     },
   });
 
-  const onSubmit = async (data: CheckoutFormValues) => {
+  const onSubmit = async (data: CheckoutFormValues):Promise<void> => {
     // console.log(data);
     // console.log(await createOrder(data));
 
