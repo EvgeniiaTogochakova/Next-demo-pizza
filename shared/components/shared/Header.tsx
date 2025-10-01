@@ -11,6 +11,7 @@ import { SearchInput } from './SearchInput';
 import { CartButton } from './CartButton';
 import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { signIn, useSession } from 'next-auth/react';
 
 interface Props {
   hasSearch?: boolean;
@@ -19,6 +20,8 @@ interface Props {
 }
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
+  const { data: session } = useSession();
+  console.log(session, 333);
   const router = useRouter();
 
   // const [openAuthModal, setOpenAuthModal] = React.useState(false);
@@ -68,7 +71,10 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
 
         {/* Правая часть */}
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="flex items-center gap-1">
+          <Button
+            onClick={() => signIn('github', { callbackUrl: '/', redirect: true })}
+            variant="outline"
+            className="flex items-center gap-1">
             <User size={16} /> Войти
           </Button>
 
