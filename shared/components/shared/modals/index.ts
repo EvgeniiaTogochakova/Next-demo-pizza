@@ -1,1 +1,2 @@
-import { ChooseProductModal } from './ChooseProductModal';
+export { ChooseProductModal } from './ChooseProductModal';
+export { AuthModal } from './auth-modal';
