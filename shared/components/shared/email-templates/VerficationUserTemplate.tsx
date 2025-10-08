@@ -11,7 +11,7 @@ export const VerificationUserTemplate: React.FC<Props> = ({ code }) => (
     </p>
 
     <p>
-      <a href={`http://inmyexperience.webhop.me:3000/api/auth/verify?code=${code}`}>Подтвердить регистрацию</a>
+      <a href={`${process.env.DOMAIN}/api/auth/verify?code=${code}`}>Подтвердить регистрацию</a>
     </p>
   </div>
 );

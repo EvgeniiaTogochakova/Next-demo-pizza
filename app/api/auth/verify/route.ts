@@ -36,9 +36,9 @@ export async function GET(req: NextRequest) {
     });
 
     // return NextResponse.redirect(new URL('/?verified', req.url)); // это ведет на localhost, а не на VPS
-    return NextResponse.redirect('http://inmyexperience.webhop.me:3000/?verified'); 
+    return NextResponse.redirect(`${process.env.DOMAIN}/?verified`); 
   } catch (error) {
-    console.error(error);
-    console.log('[VERIFY_GET] Server error', error);
+    console.error('[VERIFY_GET] Server error', error);
+    return NextResponse.json({ message: '[VERIFY_GET] Server error' }, { status: 500 });
   }
 }
