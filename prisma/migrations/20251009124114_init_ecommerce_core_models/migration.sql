@@ -120,6 +120,25 @@ CREATE TABLE "public"."VerificationCode" (
 );
 
 -- CreateTable
+CREATE TABLE "public"."Story" (
+    "id" SERIAL NOT NULL,
+    "previewImageUrl" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Story_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."StoryItem" (
+    "id" SERIAL NOT NULL,
+    "storyId" INTEGER NOT NULL,
+    "sourceUrl" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "StoryItem_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "public"."_IngredientToProduct" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL,
@@ -143,6 +162,9 @@ CREATE UNIQUE INDEX "Category_name_key" ON "public"."Category"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Cart_userId_key" ON "public"."Cart"("userId");
+
+-- CreateIndex
+CREATE INDEX "CartItem_cartId_productItemId_idx" ON "public"."CartItem"("cartId", "productItemId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationCode_userId_key" ON "public"."VerificationCode"("userId");
@@ -176,6 +198,9 @@ ALTER TABLE "public"."Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("us
 
 -- AddForeignKey
 ALTER TABLE "public"."VerificationCode" ADD CONSTRAINT "VerificationCode_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."StoryItem" ADD CONSTRAINT "StoryItem_storyId_fkey" FOREIGN KEY ("storyId") REFERENCES "public"."Story"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."_IngredientToProduct" ADD CONSTRAINT "_IngredientToProduct_A_fkey" FOREIGN KEY ("A") REFERENCES "public"."Ingredient"("id") ON DELETE CASCADE ON UPDATE CASCADE;

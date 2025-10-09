@@ -30,6 +30,7 @@ export { AddressInput } from './AddressInput';
 export { Providers } from './Providers';
 export { ProfileButton } from './ProfileButton';
 export { InfoBlock } from './InfoBlock';
+export { Stories } from './Stories';
 export * from './email-templates';
 export * from './modals';
 export * from './form';

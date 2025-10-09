@@ -1,22 +1,18 @@
 import { Suspense } from 'react';
-import { Container, Filters, ProductsGroupList, TopBar } from '@/shared/components/shared';
+import { Container, Filters, ProductsGroupList, Stories, TopBar } from '@/shared/components/shared';
 import { Title } from '@/shared/components/shared/Title';
-// import { useCategories } from '@/shared/hooks';
 import { findPizzas, GetSearchParams } from '@/shared/lib/findPizzas';
 
 export default async function Home({searchParams}:{searchParams: GetSearchParams}) {
-  // const { categories } = useCategories();
   const categories = await findPizzas(searchParams);
-
-  // const categories = await prisma.category.findMany({});
-  // console.log(categories);
-  // console.log(categories[0].products);
 
   return (
     <>
       <Container className="mt-10 border">
         <Title text="Все пиццы" size="lg" className="font-extrabold" />
       </Container>
+
+      <Stories />
       <TopBar categories={categories.filter((category) => category.products.length > 0)} />
 
       <Container className="mt-10 pb-14 border">
