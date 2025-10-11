@@ -1,5 +1,6 @@
 'use server';
 
+import { getServerSession } from 'next-auth';
 import { prisma } from '@/prisma/prisma-client';
 import { PayOrderTemplate } from '@/shared/components';
 import { CheckoutFormValues } from '@/shared/constants';
@@ -7,10 +8,14 @@ import { createPayment } from '@/shared/lib/createPayment';
 import { sendEmail } from '@/shared/lib/sendEmail';
 import { OrderStatus } from '@prisma/client';
 import { cookies } from 'next/headers';
+import { authOptions } from '@/shared/constants/authOptions';
 
-export async function createOrder(data: CheckoutFormValues): Promise<string|undefined> {
+export async function createOrder(data: CheckoutFormValues): Promise<string | undefined> {
   console.log(data);
   try {
+    const session = await getServerSession(authOptions);
+    console.log(session);
+
     const cookieStore = cookies();
     const cartToken = cookieStore.get('cartToken')?.value;
 
@@ -52,6 +57,7 @@ export async function createOrder(data: CheckoutFormValues): Promise<string|unde
     const order = await prisma.order.create({
       data: {
         token: cartToken,
+        userId: session?.user?.id ? Number(session.user.id) : null,
         fullName: data.firstName + ' ' + data.lastName,
         email: data.email,
         phone: data.phone,
@@ -73,11 +79,13 @@ export async function createOrder(data: CheckoutFormValues): Promise<string|unde
       },
     });
 
-    await prisma.cartItem.deleteMany({
-      where: {
-        cartId: userCart.id,
-      },
-    });
+
+    // Удаляли cartItem, но после я передумала, т.к. мне нужна аналитика для подсчета популярности
+    // await prisma.cartItem.deleteMany({
+    //   where: {
+    //     cartId: userCart.id,
+    //   },
+    // });
 
     const paymentData = await createPayment({
       amount: order.totalAmount,
@@ -117,5 +125,3 @@ export async function createOrder(data: CheckoutFormValues): Promise<string|unde
     }
   }
 }
-
-  
