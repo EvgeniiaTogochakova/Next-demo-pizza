@@ -1,5 +1,5 @@
 import { prisma } from '@/prisma/prisma-client';
-import { CartItem } from '@prisma/client';
+import { JsonValue } from '@prisma/client/runtime/library';
 
 const statusColors = {
   SUCCEEDED: 'bg-green-500',
@@ -27,7 +27,6 @@ interface OrderItem {
 }
 
 export default async function DashboardPage() {
-
   const [users, orders, recentOrders, orderStats, allOrders, revenueData] = await Promise.all([
     prisma.user.findMany({
       select: {
@@ -137,21 +136,24 @@ export default async function DashboardPage() {
 
   // Теперь используем revenueData для дохода
   const totalRevenue = revenueData._sum.totalAmount || 0;
-  const successfulOrdersCount = revenueData._count;
   const totalOrders = orders._count;
   const totalUsers = users.length;
 
   // Функция для получения информации о товарах в заказе
-  const getOrderItemsInfo = (itemsJson: string) => {
-    try {
-      const items = JSON.parse(itemsJson) as OrderItem[];
-      return items.map((item) => ({
-        name: item.product?.name || `Товар #${item.productItemId}`,
-        quantity: item.quantity,
-        ingredients: item.ingredients?.map((ing) => ing.name).join(', ') || '',
-      }));
-    } catch (error) {
-      return [{ name: 'Ошибка загрузки товаров', quantity: 0, ingredients: '' }];
+  const getOrderItemsInfo = (itemsJson: JsonValue) => {
+    if (typeof itemsJson === 'string') {
+      try {
+        const items = JSON.parse(itemsJson) as OrderItem[];
+        // const getOrderItemsInfo = (items: OrderItem[]) => {
+        // try {
+        return items.map((item) => ({
+          name: item.product?.name || `Товар #${item.productItemId}`,
+          quantity: item.quantity,
+          ingredients: item.ingredients?.map((ing) => ing.name).join(', ') || '',
+        }));
+      } catch (error) {
+        return [{ name: 'Ошибка загрузки товаров', quantity: 0, ingredients: '' }];
+      }
     }
   };
 
@@ -372,7 +374,7 @@ export default async function DashboardPage() {
                       </td>
                       <td className="px-6 py-4">
                         <div className="space-y-1 max-w-xs">
-                          {orderItems.map((item, index) => (
+                          {orderItems!.map((item, index) => (
                             <div key={index} className="text-sm">
                               <span className="font-medium">{item.name}</span>
                               <span className="text-gray-500 ml-2">×{item.quantity}</span>
