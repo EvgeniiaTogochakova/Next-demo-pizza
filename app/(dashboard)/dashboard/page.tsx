@@ -1,17 +1,7 @@
 import { prisma } from '@/prisma/prisma-client';
 import { JsonValue } from '@prisma/client/runtime/library';
-
-const statusColors = {
-  SUCCEEDED: 'bg-green-500',
-  PENDING: 'bg-yellow-500',
-  CANCELLED: 'bg-red-500',
-};
-
-const statusText = {
-  SUCCEEDED: 'Успешно',
-  PENDING: 'В обработке',
-  CANCELLED: 'Отменен',
-};
+import { OrderStatistics, RecentOrders, StatsGrid } from '@/shared/components/shared/dashboard';
+import { statusColors, statusText } from '@/shared/constants/dashboard';
 
 // Интерфейс для товаров в заказе
 interface OrderItem {
@@ -28,6 +18,7 @@ interface OrderItem {
 
 export default async function DashboardPage() {
   const [users, orders, recentOrders, orderStats, allOrders, revenueData] = await Promise.all([
+    // users
     prisma.user.findMany({
       select: {
         id: true,
@@ -43,12 +34,14 @@ export default async function DashboardPage() {
       orderBy: { createdAt: 'desc' },
     }),
 
+    // orders
     // Считаем ВСЕ заказы для общей статистики
     prisma.order.aggregate({
       _sum: { totalAmount: true },
       _count: true,
     }),
 
+    // recentOrders
     prisma.order.findMany({
       take: 10,
       include: {
@@ -59,11 +52,13 @@ export default async function DashboardPage() {
       orderBy: { createdAt: 'desc' },
     }),
 
+    //orderStatus
     prisma.order.groupBy({
       by: ['status'],
       _count: true,
     }),
 
+    //allOrders
     // Все заказы для детальной таблицы
     prisma.order.findMany({
       take: 20,
@@ -75,6 +70,7 @@ export default async function DashboardPage() {
       orderBy: { createdAt: 'desc' },
     }),
 
+    // revenueData
     // Доход только из успешных заказов
     prisma.order.aggregate({
       where: {
@@ -166,164 +162,16 @@ export default async function DashboardPage() {
           <p className="text-gray-600 mt-2">Обзор Next Pizza</p>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {/* Revenue Card */}
-          <div className="bg-white rounded-2xl shadow-lg border border-blue-100 p-6 transform hover:scale-105 transition-transform duration-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-blue-600 font-semibold">Общий доход</p>
-                <h3 className="text-3xl font-bold text-gray-900 mt-2">
-                  {totalRevenue.toLocaleString()} ₽
-                </h3>
-              </div>
-              <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">₽</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Orders Card */}
-          <div className="bg-white rounded-2xl shadow-lg border border-green-100 p-6 transform hover:scale-105 transition-transform duration-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-green-600 font-semibold">Всего заказов</p>
-                <h3 className="text-3xl font-bold text-gray-900 mt-2">{totalOrders}</h3>
-              </div>
-              <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">📦</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Users Card */}
-          <div className="bg-white rounded-2xl shadow-lg border border-purple-100 p-6 transform hover:scale-105 transition-transform duration-200">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-purple-600 font-semibold">Пользователи</p>
-                <h3 className="text-3xl font-bold text-gray-900 mt-2">{totalUsers}</h3>
-              </div>
-              <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">👥</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <StatsGrid totalRevenue={totalRevenue} totalOrders={totalOrders} totalUsers={totalUsers} />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Orders */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
-              <h2 className="text-xl font-bold text-white">Последние заказы</h2>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50 border-b">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                      Заказ
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                      Клиент
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                      Сумма
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                      Статус
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {recentOrders.map((order) => (
-                    <tr key={order.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-medium text-gray-900">#{order.id}</span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
-                          {order.user?.fullName || 'Гость'}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {order.user?.email || order.email}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="text-sm font-bold text-green-600">
-                          {order.totalAmount} ₽
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${
-                            order.status === 'SUCCEEDED'
-                              ? 'bg-green-100 text-green-800 border border-green-200'
-                              : order.status === 'PENDING'
-                                ? 'bg-yellow-100 text-yellow-800 border border-yellow-200'
-                                : 'bg-red-100 text-red-800 border border-red-200'
-                          }`}>
-                          {statusText[order.status]}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <RecentOrders recentOrders={recentOrders} />
 
-          {/* Order Statistics */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-green-500 to-green-600 px-6 py-4">
-              <h2 className="text-xl font-bold text-white">Статистика заказов</h2>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {orderStats.map((stat) => {
-                  const percentage = (stat._count / totalOrders) * 100;
-                  return (
-                    <div key={stat.status} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-gray-700">
-                          {statusText[stat.status]}
-                        </span>
-                        <span className="text-sm font-bold text-gray-900">
-                          {stat._count} ({percentage.toFixed(1)}%)
-                        </span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className={`h-2 rounded-full ${statusColors[stat.status]}`}
-                          style={{ width: `${percentage}%` }}></div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+          <OrderStatistics orderStats={orderStats} popularProductsFinal={popularProductsFinal} totalOrders={totalOrders}/>
 
-              {/* Popular Products */}
-              <div className="mt-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Популярные товары</h3>
-                <div className="space-y-3">
-                  {popularProductsFinal.map((product, index) => (
-                    <div
-                      key={product.id}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                      <div className="flex items-center space-x-3">
-                        <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                          {index + 1}
-                        </span>
-                        <span className="font-medium text-gray-900">{product.product.name}</span>
-                      </div>
-                      <span className="text-sm text-gray-600">{product.salesCount} продаж</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-
+          
         {/* Detailed Orders Table */}
         <div className="mt-8 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
           <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-4">
