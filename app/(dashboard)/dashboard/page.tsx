@@ -1,6 +1,6 @@
 import { prisma } from '@/prisma/prisma-client';
 import { JsonValue } from '@prisma/client/runtime/library';
-import { OrderStatistics, RecentOrders, StatsGrid } from '@/shared/components/shared/dashboard';
+import { OrderStatistics, RecentOrders, StatsGrid, UsersTable } from '@/shared/components/shared/dashboard';
 import { statusColors, statusText } from '@/shared/constants/dashboard';
 
 // Интерфейс для товаров в заказе
@@ -26,7 +26,6 @@ export default async function DashboardPage() {
         email: true,
         role: true,
         verified: true,
-        createdAt: true,
         _count: {
           select: { orders: true },
         },
@@ -262,71 +261,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Users Table */}
-        <div className="mt-8 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-          <div className="bg-gradient-to-r from-purple-500 to-purple-600 px-6 py-4">
-            <h2 className="text-xl font-bold text-white">Пользователи системы</h2>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                    Имя
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                    Заказы
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                    Статус
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
-                    Роль
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {users.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{user.fullName}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{user.email}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full border border-blue-200">
-                        {user._count.orders}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full border ${
-                          user.verified
-                            ? 'bg-green-100 text-green-800 border-green-200'
-                            : 'bg-yellow-100 text-yellow-800 border-yellow-200'
-                        }`}>
-                        {user.verified ? '✅ Подтвержден' : '⏳ Ожидание'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full border ${
-                          user.role === 'ADMIN'
-                            ? 'bg-red-100 text-red-800 border-red-200'
-                            : 'bg-gray-100 text-gray-800 border-gray-200'
-                        }`}>
-                        {user.role}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <UsersTable users={users}/>
       </div>
     </div>
   );
