@@ -43,7 +43,7 @@ export default async function DashboardPage() {
       orderBy: { createdAt: 'desc' },
     }),
 
-    //orderStatus
+    //orderStats
     prisma.order.groupBy({
       by: ['status'],
       _count: true,
@@ -99,7 +99,7 @@ export default async function DashboardPage() {
 
   // Получаем информацию о товарах
   const popularProductIds = Object.entries(productSales)
-    .sort(([, a], [, b]) => (b as number) - (a as number))
+    .sort(([, a], [, b]) => (b - a))
     .slice(0, 10)
     .map(([id]) => parseInt(id));
 

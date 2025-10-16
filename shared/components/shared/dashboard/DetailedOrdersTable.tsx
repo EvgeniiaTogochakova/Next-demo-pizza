@@ -23,7 +23,7 @@ export const DetailedOrdersTable: React.FC<PropsDetailedORders> = ({ allOrders }
           <thead className="bg-gray-50 border-b">
             <tr>
               {['Заказ', 'Клиент', 'Товары', 'Сумма', 'Статус', 'Дата'].map((thElement) => (
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
+                <th key={thElement} className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
                   {thElement}
                 </th>
               ))}

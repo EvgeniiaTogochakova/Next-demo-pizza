@@ -37,7 +37,7 @@ export const OrderStatistics: React.FC<Props> = ({
           {orderStats.map((stat) => {
             const percentage = (stat._count / totalOrders) * 100;
             return (
-              <div key={stat.status} className="space-y-2">
+              <div key={Math.random()*10000} className="space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-gray-700">
                     {statusText[stat.status]}

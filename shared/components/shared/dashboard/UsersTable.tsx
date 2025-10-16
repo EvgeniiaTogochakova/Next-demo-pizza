@@ -24,7 +24,7 @@ export const UsersTable: React.FC<Props> = ({ users }) => {
           <thead className="bg-gray-50 border-b">
             <tr>
               {['Имя', 'Email', 'Заказы', 'Статус', 'Роль'].map((thElement) => (
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
+                <th key={thElement} className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">
                   {thElement}
                 </th>
               ))}
