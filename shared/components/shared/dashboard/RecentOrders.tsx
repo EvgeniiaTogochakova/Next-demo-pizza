@@ -1,10 +1,6 @@
+import { OrderWithUser } from '@/@types/prisma-types';
 import { statusText } from '@/shared/constants/dashboard';
-import { Order, User } from '@prisma/client';
 import React, { PropsWithChildren } from 'react';
-
-export type OrderWithUser = Order & {
-  user: Pick<User, 'fullName' | 'email'> | null;
-};
 
 interface Props {
   recentOrders: OrderWithUser[];
