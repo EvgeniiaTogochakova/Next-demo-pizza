@@ -48,6 +48,9 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
 
   return (
     <header className={cn('border-b', className)}>
+      <div className="bg-red-500 text-white text-center py-2 px-4 text-sm font-bold">
+        ДЕМО-РЕЖИМ | Это тестовая версия магазина
+      </div>
       <Container className="flex items-center justify-between py-8">
         {/* Левая часть */}
         <Link href="/">

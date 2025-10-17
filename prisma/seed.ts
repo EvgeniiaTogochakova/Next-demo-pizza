@@ -163,27 +163,27 @@ async function up() {
     data: [
       {
         previewImageUrl:
-          'https://cdn.inappstory.ru/story/xep/xzh/zmc/cr4gcw0aselwvf628pbmj3j/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=3101815496',
+          'https://avatars.mds.yandex.net/i?id=18d96622cead88d1fb770d4d6e0c1c8eeb37b83a-5582331-images-thumbs&n=13',
       },
       {
         previewImageUrl:
-          'https://cdn.inappstory.ru/story/km2/9gf/jrn/sb7ls1yj9fe5bwvuwgym73e/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=3074015640',
+          'https://avatars.mds.yandex.net/i?id=ea2250b26761daccb3b652570b64630261c5454b-10898088-images-thumbs&n=13',
       },
       {
         previewImageUrl:
-          'https://cdn.inappstory.ru/story/quw/acz/zf5/zu37vankpngyccqvgzbohj1/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=1336215020',
+          'https://avatars.mds.yandex.net/i?id=99303f13ad680e7699ba7f148232533c-5286781-images-thumbs&n=13',
       },
       {
         previewImageUrl:
-          'https://cdn.inappstory.ru/story/7oc/5nf/ipn/oznceu2ywv82tdlnpwriyrq/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=38903958',
+          'https://avatars.mds.yandex.net/i?id=e076e5cff5d50d61917255b20e2fe957_sr-10639406-images-thumbs&n=13',
       },
       {
         previewImageUrl:
-          'https://cdn.inappstory.ru/story/q0t/flg/0ph/xt67uw7kgqe9bag7spwkkyw/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=2941222737',
+          'https://avatars.mds.yandex.net/i?id=d33fef67f0b4009de2dc3465fa96a6dd_sr-2455092-images-thumbs&n=13',
       },
       {
         previewImageUrl:
-          'https://cdn.inappstory.ru/story/lza/rsp/2gc/xrar8zdspl4saq4uajmso38/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAE&v=4207486284',
+          'https://avatars.mds.yandex.net/i?id=1924b26097925ea59abe8c0a318ea218_sr-9657256-images-thumbs&n=13',
       },
     ],
   });
@@ -193,27 +193,26 @@ async function up() {
       {
         storyId: 1,
         sourceUrl:
-          'https://cdn.inappstory.ru/file/dd/yj/sx/oqx9feuljibke3mknab7ilb35t.webp?k=IgAAAAAAAAAE',
+          'https://avatars.mds.yandex.net/i?id=e4699e4cdb50a3902d9944f0e4fed252ba04b16b-4010175-images-thumbs&ref=rim&n=33&w=218&h=200',
       },
       {
         storyId: 1,
         sourceUrl:
-          'https://cdn.inappstory.ru/file/jv/sb/fh/io7c5zarojdm7eus0trn7czdet.webp?k=IgAAAAAAAAAE',
+          'https://avatars.mds.yandex.net/i?id=e6d16f6b41db938fb7547dee599f7746a8a86a9f-10590187-images-thumbs&ref=rim&n=33&w=160&h=200',
       },
       {
         storyId: 1,
         sourceUrl:
-          'https://cdn.inappstory.ru/file/ts/p9/vq/zktyxdxnjqbzufonxd8ffk44cb.webp?k=IgAAAAAAAAAE',
+          'https://avatars.mds.yandex.net/i?id=0f26fba10ff8d610001ac3a070d469fa0665f4d1-8497298-images-thumbs&ref=rim&n=33&w=267&h=200',
+      },
+      {
+        storyId: 1,
+        sourceUrl: 'https://i.pinimg.com/236x/6f/34/26/6f3426613b7c01d3a5558a8ad66c7f8a.jpg?nii=t',
       },
       {
         storyId: 1,
         sourceUrl:
-          'https://cdn.inappstory.ru/file/ur/uq/le/9ufzwtpdjeekidqq04alfnxvu2.webp?k=IgAAAAAAAAAE',
-      },
-      {
-        storyId: 1,
-        sourceUrl:
-          'https://cdn.inappstory.ru/file/sy/vl/c7/uyqzmdojadcbw7o0a35ojxlcul.webp?k=IgAAAAAAAAAE',
+          'https://avatars.mds.yandex.net/i?id=749ff11f3fc063acb121d9b5ef616825-5238957-images-thumbs&ref=rim&n=33&w=200&h=200',
       },
     ],
   });
@@ -227,6 +226,8 @@ async function down() {
   await prisma.$executeRaw`TRUNCATE TABLE "Ingredient" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "Product" RESTART IDENTITY CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "ProductItem" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "Story" RESTART IDENTITY CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "StoryItem" RESTART IDENTITY CASCADE`;
 }
 
 async function main() {
