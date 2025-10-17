@@ -49,6 +49,13 @@ async function up() {
         verified: new Date(),
         role: 'ADMIN',
       },
+      {
+        fullName: 'Extra Admin',
+        email: 'extra@test.ru',
+        password: hashSync('171717', 10),
+        verified: new Date(),
+        role: 'ADMIN',
+      },
     ],
   });
 
