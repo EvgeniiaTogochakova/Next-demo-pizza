@@ -59,9 +59,11 @@ export async function POST(req: NextRequest) {
         OrderFailureTemplate({ orderId: order.id, items }),
       );
     }
+
+     return NextResponse.json({ status: 'success'});
   
   } catch (error) {
     console.log('[Checkout Callback] Error:', error);
-    return NextResponse.json({ error: 'Server error' });
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
