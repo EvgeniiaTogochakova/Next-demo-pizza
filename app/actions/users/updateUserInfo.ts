@@ -3,7 +3,7 @@
 import { prisma } from '@/prisma/prisma-client';
 import { getUserSession } from '@/shared/lib/getUserSession';
 // import { Prisma } from '@prisma/client';
-import { hashSync } from 'bcrypt';
+import { hashSync } from 'bcryptjs';
 import { revalidatePath } from 'next/cache';
 
 interface UpdateUserData {

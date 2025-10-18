@@ -1,6 +1,6 @@
 // import { prisma} from './prisma-client';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { hashSync } from 'bcrypt';
+import { hashSync } from 'bcryptjs';
 import { categories, ingredients, products } from './constants';
 
 const prisma = new PrismaClient({

@@ -3,7 +3,7 @@
 import { prisma } from '@/prisma/prisma-client';
 import { VerificationUserTemplate } from '@/shared/components';
 import { sendEmail } from '@/shared/lib/sendEmail';
-import { hashSync } from 'bcrypt';
+import { hashSync } from 'bcryptjs';
 import { v4 as uuid } from 'uuid';
 
 interface CreateUserData {
