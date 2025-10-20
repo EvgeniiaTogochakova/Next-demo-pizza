@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /
+
+# Блокируем все поисковые системы
+User-agent: Googlebot
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: DuckDuckBot
+Disallow: /
+
+Sitemap: https://inmyexperience.pro/sitemap.xml
