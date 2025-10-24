@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
 
     if (isSucceeded) {
       await sendEmail(
+        process.env.ORDERS_RESEND_EMAIL!,
         order.email,
         'Next Pizza / Ваш заказ успешно оформлен 🎉',
         OrderSuccessTemplate({ orderId: order.id, items }),
@@ -54,6 +55,7 @@ export async function POST(req: NextRequest) {
 
     if (isCanceled) {
       await sendEmail(
+        process.env.ORDERS_RESEND_EMAIL!,
         order.email,
         `Next Pizza / Возникла ошибка при оплате заказа 😟	`,
         OrderFailureTemplate({ orderId: order.id, items }),

@@ -48,6 +48,7 @@ export async function registerUser(body: CreateUserData) {
     });
 
     await sendEmail(
+      process.env.HELLO_RESEND_EMAIL!,
       createdUser.email,
       'Next Pizza / 📝 Подтверждение регистрации',
       VerificationUserTemplate({

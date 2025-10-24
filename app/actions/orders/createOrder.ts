@@ -109,6 +109,7 @@ export async function createOrder(data: CheckoutFormValues): Promise<string | un
     const paymentUrl = paymentData.confirmation.confirmation_url;
 
     await sendEmail(
+      process.env.ORDERS_RESEND_EMAIL!,
       data.email,
       'Next Pizza / Оплатите заказ #' + order.id,
       PayOrderTemplate({
