@@ -23,10 +23,18 @@ export async function registerUser(body: CreateUserData) {
 
     if (user) {
       if (!user.verified) {
-        throw new Error('Почта не подтверждена');
+        return {
+          error: true,
+          type: 'ACCOUNT_IS_NOT_VERIFIED',
+          message: 'Аккаунт не подтвержден',
+        };
       }
 
-      throw new Error('Пользователь уже существует');
+      return {
+        error: true,
+        type: 'ACCOUNT_ALREADY_EXISTS',
+        message: 'Аккаунт уже существует',
+      };
     }
 
     const createdUser = await prisma.user.create({
@@ -37,8 +45,7 @@ export async function registerUser(body: CreateUserData) {
       },
     });
 
-    // const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const code = uuid();
+    const code = uuid().slice(0, 4);
 
     await prisma.verificationCode.create({
       data: {
@@ -55,8 +62,13 @@ export async function registerUser(body: CreateUserData) {
         code,
       }),
     );
+
+    return { success: true };
   } catch (err) {
-    console.log('Error [CREATE_USER]', err);
-    throw err;
+    return {
+      error: true,
+      type: 'UNKNOWN_ERROR',
+      message: 'Неизвестная ошибка',
+    };
   }
 }

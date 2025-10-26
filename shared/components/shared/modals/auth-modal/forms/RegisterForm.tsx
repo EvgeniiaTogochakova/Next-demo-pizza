@@ -11,11 +11,9 @@ import { registerUser } from '@/app/actions/users/registerUser';
 
 interface Props {
   onClose?: VoidFunction;
-//   onClickLogin?: VoidFunction;
 }
 
-// export const RegisterForm: React.FC<Props> = ({ onClose, onClickLogin }) => {
-export const RegisterForm: React.FC<Props> = ({ onClose}) => {
+export const RegisterForm: React.FC<Props> = ({ onClose }) => {
   const form = useForm<TFormRegisterValues>({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
@@ -28,19 +26,30 @@ export const RegisterForm: React.FC<Props> = ({ onClose}) => {
 
   const onSubmit = async (data: TFormRegisterValues) => {
     try {
-      await registerUser({
+      const result = await registerUser({
         email: data.email,
         fullName: data.fullName,
         password: data.password,
       });
 
-      toast.error('Регистрация успешна 📝. Подтвердите свою почту', {
-        icon: '✅',
-      });
+      if (result?.error) {
+        if (result.type === 'ACCOUNT_IS_NOT_VERIFIED') {
+          return toast.error(`${result.message}. Подтвердите почту`, {
+            icon: '❌',
+          });
+        }
+        if (result.type === 'ACCOUNT_ALREADY_EXISTS') {
+          return toast.error(`${result.message}. Войдите через соцсети`, {
+            icon: '❌',
+          });
+        }
+      }
 
+      toast.success('Вы почти зарегистрировались 📝. Подтвердите свою почту');
       onClose?.();
     } catch (error) {
-      return toast.error('Неверный E-Mail или пароль', {
+      // для сетевых/неожиданных ошибок
+      toast.error('Возникли ошибки при регистрации. Проверьте правильность E-Mail или пароля', {
         icon: '❌',
       });
     }
