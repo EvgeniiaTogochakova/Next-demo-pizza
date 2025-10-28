@@ -5,8 +5,7 @@ generator client {
 datasource db {
     provider = "postgresql"
 
-    url       = env("PRISMA_DATABASE_URL") // Для запросов (пуллинг)
-    directUrl = env("DATABASE_URL") // Для миграций и транзакций
+    url       = env("DATABASE_URL") 
 }
 
 model User {
@@ -63,7 +62,8 @@ model ProductItem {
     size      Int?
     pizzaType Int?
 
-    cartItems CartItem[]
+    cartItems  CartItem[]
+    popularity ProductPopularity?
 
     product   Product @relation(fields: [productId], references: [id])
     productId Int
@@ -173,6 +173,18 @@ model StoryItem {
     sourceUrl String
 
     createdAt DateTime @default(now())
+}
+
+model ProductPopularity {
+    id Int @id @default(autoincrement())
+
+    productItem   ProductItem @relation(fields: [productItemId], references: [id])
+    productItemId Int         @unique
+
+    purchaseCount Int @default(0)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 enum OrderStatus {

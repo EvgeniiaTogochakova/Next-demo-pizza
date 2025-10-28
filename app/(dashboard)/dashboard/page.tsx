@@ -72,54 +72,27 @@ export default async function DashboardPage() {
     }),
   ]);
 
-  // Самые популярные продукты (по успешным заказам)
-  const popularProducts = await prisma.order.findMany({
-    where: {
-      status: 'SUCCEEDED',
-    },
-    select: {
-      items: true,
-    },
-  });
+  // Анализируем популярность продуктов, собираем статистику по 10 самым популярным
 
-  // Анализируем JSON поле items чтобы посчитать популярность
-  const productSales: Record<number, number> = {};
-
-  popularProducts.forEach((order) => {
-    try {
-      const items = JSON.parse(order.items as string) as OrderItem[];
-      items.forEach((item) => {
-        const productItemId = item.productItemId;
-        productSales[productItemId] = (productSales[productItemId] || 0) + item.quantity;
-      });
-    } catch (error) {
-      console.error('Error parsing order items:', error);
-    }
-  });
-
-  // Получаем информацию о товарах
-  const popularProductIds = Object.entries(productSales)
-    .sort(([, a], [, b]) => (b - a))
-    .slice(0, 10)
-    .map(([id]) => parseInt(id));
-
-  const popularProductsWithDetails = await prisma.productItem.findMany({
-    where: {
-      id: { in: popularProductIds },
-    },
+  const popularProducts = await prisma.productPopularity.findMany({
     include: {
-      product: { select: { name: true } },
-      _count: {
-        select: { cartItems: true },
+      productItem: {
+        select: {
+          product: {
+            select: {
+              name: true,
+            },
+          },
+        },
       },
     },
+    orderBy: {
+      purchaseCount: 'desc',
+    },
+    take: 10,
   });
 
-  // Добавляем реальное количество продаж из нашего анализа
-  const popularProductsFinal = popularProductsWithDetails.map((product) => ({
-    ...product,
-    salesCount: productSales[product.id] || 0,
-  }));
+  console.log(popularProducts);
 
   // Теперь используем revenueData для дохода
   const totalRevenue = revenueData._sum.totalAmount || 0;
@@ -143,7 +116,7 @@ export default async function DashboardPage() {
 
           <OrderStatistics
             orderStats={orderStats}
-            popularProductsFinal={popularProductsFinal}
+            popularProducts={popularProducts}
             totalOrders={totalOrders}
           />
         </div>

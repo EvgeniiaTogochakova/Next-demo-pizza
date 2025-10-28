@@ -1,14 +1,18 @@
 import { statusColors, statusText } from '@/shared/constants/dashboard';
-import { OrderStatus, Product, ProductItem } from '@prisma/client';
+import { OrderStatus} from '@prisma/client';
 import React from 'react';
 
-type ProductItemWithDetails = ProductItem & {
-  product: Pick<Product, 'name'>;
-  _count: { cartItems: number };
-};
-
-type ProductItemWithSalesCount = ProductItemWithDetails & {
-  salesCount: number;
+type PopularProduct = {
+  id: number;
+  purchaseCount: number;
+  productItemId: number;
+  productItem: {
+    product: {
+      name: string;
+    };
+  };
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 interface Props {
@@ -17,13 +21,13 @@ interface Props {
     status: OrderStatus;
   }[];
   totalOrders: number;
-  popularProductsFinal: ProductItemWithSalesCount[];
+  popularProducts: PopularProduct[];
 }
 
 export const OrderStatistics: React.FC<Props> = ({
   orderStats,
   totalOrders,
-  popularProductsFinal,
+  popularProducts,
 }) => {
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
@@ -60,17 +64,17 @@ export const OrderStatistics: React.FC<Props> = ({
         <div className="mt-8">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Популярные товары</h3>
           <div className="space-y-3">
-            {popularProductsFinal.map((product, index) => (
+            {popularProducts.map(({productItem, purchaseCount}, index) => (
               <div
-                key={product.id}
+                key={index}
                 className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
                 <div className="flex items-center space-x-3">
                   <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
                     {index + 1}
                   </span>
-                  <span className="font-medium text-gray-900">{product.product.name}</span>
+                  <span className="font-medium text-gray-900">{productItem.product.name}</span>
                 </div>
-                <span className="text-sm text-gray-600">{product.salesCount} продаж</span>
+                <span className="text-sm text-gray-600">{purchaseCount} продаж</span>
               </div>
             ))}
           </div>

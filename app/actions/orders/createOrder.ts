@@ -69,7 +69,37 @@ export async function createOrder(data: CheckoutFormValues): Promise<string | un
       },
     });
 
-    /* Очищаем корзину */
+    /* Собираем аналитику из корзины */
+    const cartItemsForAnalytics = userCart.items.map((item) => ({
+      productItemId: item.productItemId,
+      quantity: item.quantity,
+    }));
+
+    /* Обновляем статистику популярности */
+    for (const item of cartItemsForAnalytics) {
+      await prisma.productPopularity.upsert({
+        where: {
+          productItemId: item.productItemId,
+        },
+        update: {
+          purchaseCount: {
+            increment: item.quantity,
+          },
+        },
+        create: {
+          productItemId: item.productItemId,
+          purchaseCount: item.quantity,
+        },
+      });
+    }
+
+    // Очищаем корзину
+    await prisma.cartItem.deleteMany({
+      where: {
+        cartId: userCart.id,
+      },
+    });
+
     await prisma.cart.update({
       where: {
         id: userCart.id,
@@ -78,14 +108,6 @@ export async function createOrder(data: CheckoutFormValues): Promise<string | un
         totalAmount: 0,
       },
     });
-
-
-    // Удаляли cartItem, но после я передумала, т.к. мне нужна аналитика для подсчета популярности
-    // await prisma.cartItem.deleteMany({
-    //   where: {
-    //     cartId: userCart.id,
-    //   },
-    // });
 
     const paymentData = await createPayment({
       amount: order.totalAmount,
